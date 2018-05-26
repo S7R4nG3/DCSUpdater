@@ -5,18 +5,82 @@
 cls
 
 # First, we need to check and be sure that your PowerShell window is running as an administrator
-## I have this code at home
-## I have this code at home
-## I have this code at home
+# If it isn't, open an Admin PowerShell window
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$admin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if($admin -eq $false){
+If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
+
+    {   $arguments = "& '" + $myinvocation.mycommand.definition + "'"
+        Start-Process powershell -Verb runAs -ArgumentList $arguments
+        Break
+    }
+
+}
+
+# Next do a quick sanity check just asking if you'd like to continue
+write-host "Welcome to STRANGE's DCS Updater Utility!"
+write-host "The script will walk you through whats happening and ask you some questions if it has trouble"
+$proceed = read-host "Would you like to continue? (y/n)"
+if($proceed -eq "y" -or $proceed -eq "yes"){
 
 # This piece now looks to see if it finds an Eagle Dynamics folder on your C: drive
-$directory = Get-ChildItem c:\Test -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
+write-host "Checking to find your ED directory..."
+write-host "Give me just a sec..."
+$directory = Get-ChildItem "c:\Program Files\" -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
 
-# If Eagle Dynamics folder isn't found, prompt you to enter the Drive Letter for your install directory
+# If an Eagle Dynamics folder isn't found, prompt you to enter the Drive Letter for your install directory
 if($directory -eq $null){
     write-host "Looks like your install directory isn't on C:\"
     $installdrive = Read-Host "Please provide the drive letter for your install (Ex. E)"
-    $installdrive = $installdrive + ":\Eagle Dynamics"
-    }
-else{}
+    $installdirectory = $installdrive + ":\Eagle Dynamics\DCS World\bin"
+        $installdirectory = $env:ProgramFiles + "\Eagle Dynamics\DCS World\bin"
+        write-host "Cool, I see your install directory is listed at:
 
+        $installdirectory
+        "
+    }
+else{
+        $installdirectory = $env:ProgramFiles + "\Eagle Dynamics\DCS World\bin"
+        write-host "Cool, I see your install directory is listed at:
+
+        $installdirectory
+        "
+    }
+
+
+    $DCSEXE = "dcs_updater.exe"
+    $udpate = 'update'
+    $repair = 'repair'
+    $openbeta = 'update @openbeta'
+    $openalpha = 'update @openalpha'
+    $release = 'update @release'
+    $cleanup = 'cleanup'
+
+$Title = "Alrighty, lets get this rolling..."
+$Info = "Choose and option to proceed!"
+ 
+$options = [System.Management.Automation.Host.ChoiceDescription[]] @("&None", "&Update", "&Repair", "Update:Open&Beta","Update:Open&Alpha","Update:Re&lease", "&Cleanup")
+    [int]$defaultchoice = 0
+$opt = $host.UI.PromptForChoice($Title , $Info , $Options,$defaultchoice)
+
+switch($opt)
+    {
+    0 {write-host "Have a good one!" -foregroundcolor Green
+       read-host "Press any key to continue" }
+    1 {& "$installdirectory\$DCSEXE" $update }
+    2 {& "$installdirectory\$DCSEXE" $repair }
+    3 {& "$installdirectory\$DCSEXE" $openbeta }
+    4 {& "$installdirectory\$DCSEXE" $openalpha }
+    5 {& "$installdirectory\$DCSEXE" $release } 
+    6 {& "$installdirectory\$DCSEXE" $cleanup }
+    }
+
+}
+
+
+else{write-host "Thanks for giving me a try!" -foregroundcolor Green
+write-host "Press any key to continue..."
+$HOST.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | OUT-NULL
+$HOST.UI.RawUI.Flushinputbuffer()}
