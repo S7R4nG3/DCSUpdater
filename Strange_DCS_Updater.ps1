@@ -49,7 +49,7 @@ else{
         "
     }
 
-
+# Now we need to setup some variables for the updater EXE to tell it what we want to do
     $DCSEXE = "dcs_updater.exe"
     $udpate = 'update'
     $repair = 'repair'
@@ -58,6 +58,7 @@ else{
     $release = 'update @release'
     $cleanup = 'cleanup'
 
+# Next we need some choice options for the variables we just set above
 $Title = "Alrighty, lets get this rolling..."
 $Info = "Choose and option to proceed!"
  
@@ -65,6 +66,7 @@ $options = [System.Management.Automation.Host.ChoiceDescription[]] @("&None", "&
     [int]$defaultchoice = 0
 $opt = $host.UI.PromptForChoice($Title , $Info , $Options,$defaultchoice)
 
+# Finally depending on what option you choose, the updater will do whatever you want it to!
 switch($opt)
     {
     0 {write-host "Have a good one!" -foregroundcolor Green
@@ -79,7 +81,7 @@ switch($opt)
 
 }
 
-
+# Lastly, if the user said above that they didn't want to continue, kill the script :)
 else{write-host "Thanks for giving me a try!" -foregroundcolor Green
 write-host "Press any key to continue..."
 $HOST.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") | OUT-NULL
