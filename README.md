@@ -13,10 +13,16 @@ I'm leaving the script open so users can see exactly what it does and I'll try t
 I am also by no means a PowerShell wizard, I just know how to use it for some random things and script in some creative solutions, so if anyone has any suggestions/edits I'll happily add some users to the project.
 
 Thanks and enjoy!
+
 -STRANGE
 
-# TO RUN
+## TO RUN
+
+For starters, this is for WINDOWS ONLY! I feel like that should be understood, but I bet someone out there would have asked at some point or somehow gotten DCS running on Linux or something....
 
 To run the script, just download it to a convenient directory on your machine (anywhere works) and right click the script and select "Run with PowerShell".
 
 From there, I've added dialogs to the script that wil walk you through the process!
+
+If you do have some problems, definitely let me know in the ISSUES section, I'll try to address them as best I can.
+If you do run into particular issues though, if you can copy the output (or even screenshot it) that helps for troubleshooting.
