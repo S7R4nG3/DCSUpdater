@@ -28,25 +28,7 @@ if($proceed -eq "y" -or $proceed -eq "yes"){
 # This piece now looks to see if it finds an Eagle Dynamics folder on your C: drive
 write-host "Checking to find your ED directory..."
 write-host "Give me just a sec..."
-$directory = Get-ChildItem "c:\Program Files\" -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
-
-# If an Eagle Dynamics folder isn't found, prompt you to enter the Drive Letter for your install directory
-if($directory -eq $null){
-    write-host "Looks like your install directory isn't on C:\"
-    $installdrive = Read-Host "Please provide the drive letter for your install (Ex. E)"
-        $installdirectory = Get-ChildItem "$installdrive" -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
-        write-host "Cool, I see your install directory is listed at:
-
-        $installdirectory
-        "
-    }
-else{
-        $installdirectory = $env:ProgramFiles + "\Eagle Dynamics\DCS World\bin"
-        write-host "Cool, I see your install directory is listed at:
-
-        $installdirectory
-        "
-    }
+$installdirectory = (Get-ItemProperty -Path "Registry::HKEY_CURRENT_USER\Software\Eagle Dynamics\DCS World\bin\").path
 
 # Now we need to setup some variables for the updater EXE to tell it what we want to do
     $DCSEXE = "dcs_updater.exe"
