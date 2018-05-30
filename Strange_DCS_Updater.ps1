@@ -34,8 +34,7 @@ $directory = Get-ChildItem "c:\Program Files\" -Recurse | Where-Object {$_.PSIsC
 if($directory -eq $null){
     write-host "Looks like your install directory isn't on C:\"
     $installdrive = Read-Host "Please provide the drive letter for your install (Ex. E)"
-    $installdirectory = $installdrive + ":\Eagle Dynamics\DCS World\bin"
-        $installdirectory = $env:ProgramFiles + "\Eagle Dynamics\DCS World\bin"
+        $installdirectory = Get-ChildItem "$installdrive" -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
         write-host "Cool, I see your install directory is listed at:
 
         $installdirectory
