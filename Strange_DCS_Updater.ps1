@@ -28,7 +28,7 @@ if($proceed -eq "y" -or $proceed -eq "yes"){
 # This piece now looks to see if it finds an Eagle Dynamics folder on your C: drive
 write-host "Checking to find your ED directory..."
 write-host "Give me just a sec..."
-$directory = Get-ChildItem "c:\Program Files\" -Recurse | Where-Object {$_.PSIsContainer -eq $true -and $_.Name -match "Eagle Dynamics"}
+$directory = Get-ChildItem HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\* | % { Get-ItemProperty $_.PsPath } | Where-Object {$_.DisplayName -match "DCS World"} | Select InstallLocation
 
 # If an Eagle Dynamics folder isn't found, prompt you to enter the Drive Letter for your install directory
 if($directory -eq $null){
