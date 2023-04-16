@@ -1,4 +1,4 @@
-name: "Build the executable..."
+name: "Build the executable"
 
 on:
   push:
@@ -21,9 +21,14 @@ jobs:
       - name: build the binary
         run: env GOOS=windows GOARCH=amd64 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: store the binary 
         uses: actions/upload-artifact@v3
         with:
           name: "DCS Updater-${{ steps.vars.outputs.short_sha }}.exe"
           path: "./DCS Updater.exe"
+          retention-days: 7
       
