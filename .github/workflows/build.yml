@@ -19,7 +19,7 @@ jobs:
         run: go mod tidy
 
       - name: build the binary
-        run: env GOOS=windows GOARCH=amd64 go build -o "DCS Updater.exe" -ldflags -H=windowsgui .\cmd\
+        run: env GOOS=windows GOARCH=amd64 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
       - name: store the binary 
         uses: actions/upload-artifact@v3
