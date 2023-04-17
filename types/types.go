@@ -11,6 +11,9 @@ var (
 	OpenBeta = Version{
 		Name: "openbeta",
 	}
+	OpenAlpha = Version{
+		Name: "openalpha",
+	}
 	Repair = Version{
 		Name: "repair",
 	}

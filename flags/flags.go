@@ -6,10 +6,11 @@ import (
 
 func Get(s types.Version) []string {
 	var (
-		DcsStable   = []string{"update", "@stable"}
-		DcsOpenBeta = []string{"update", "@openbeta"}
-		Repair      = []string{"repair"}
-		Cleanup     = []string{"cleanup"}
+		DcsStable    = []string{"update", "@release"}
+		DcsOpenBeta  = []string{"update", "@openbeta"}
+		DcsOpenAlpha = []string{"update", "@openalpha"}
+		Repair       = []string{"repair"}
+		Cleanup      = []string{"cleanup"}
 	)
 
 	switch s {
@@ -17,6 +18,8 @@ func Get(s types.Version) []string {
 		return DcsStable
 	case types.OpenBeta:
 		return DcsOpenBeta
+	case types.OpenAlpha:
+		return DcsOpenAlpha
 	case types.Repair:
 		return Repair
 	case types.Cleanup:

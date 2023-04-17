@@ -61,6 +61,14 @@ func (ui *UI) Prompt() {
 						},
 					},
 					{
+						Text:       "DCS Open Alpha",
+						Alignment:  declare.AlignHNearVCenter,
+						ColumnSpan: 10,
+						OnClicked: func() {
+							ui.CLiFlags = flags.Get(types.OpenAlpha)
+						},
+					},
+					{
 						Text:      "Repair",
 						Alignment: declare.AlignHNearVCenter,
 						OnClicked: func() {
