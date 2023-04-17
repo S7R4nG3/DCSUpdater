@@ -7,7 +7,7 @@ on:
     
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
@@ -16,10 +16,10 @@ jobs:
           check-latest: true
 
       - name: install go deps
-        run: go mod tidy
+        run: apt-get install mingw-w64
 
       - name: build the binary
-        run: go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
+        run: env CC=x86_64-w64-mingw32-gc GOOS=windows GOARCH=amd64 CGO_ go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
       - name: Set outputs
         id: vars
@@ -29,6 +29,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "DCS Updater-${{ env.sha_short }}.exe"
-          path: "./DCS Updater.exe"
+          path: |
+            "./DCS Updater.exe"
+            "DCS Updater.exe.manifest"
           retention-days: 7
       
