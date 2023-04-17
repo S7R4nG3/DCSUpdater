@@ -32,9 +32,11 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Download a single artifact
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: "DCS Updater-${{ env.sha_short }}"
+          branch: master
+          workflow_conclusion: success
 
       - name: Upload Release Asset
         id: upload-release-asset 
