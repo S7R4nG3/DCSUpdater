@@ -23,12 +23,12 @@ jobs:
 
       - name: Set outputs
         id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: store the binary 
         uses: actions/upload-artifact@v3
         with:
-          name: "DCS Updater-${{ steps.vars.outputs.short_sha }}.exe"
+          name: "DCS Updater-${{ env.sha_short }}.exe"
           path: "./DCS Updater.exe"
           retention-days: 7
       
