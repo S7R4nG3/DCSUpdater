@@ -28,7 +28,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "DCS Updater-${{ env.sha_short }}.exe"
-          path: |
-            "DCS Updater.exe*"
+          path: "./DCS Updater.exe*"
           retention-days: 7
       
