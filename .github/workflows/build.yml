@@ -16,7 +16,10 @@ jobs:
           check-latest: true
 
       - name: build the binary
-        run: env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
+        run: |
+        go install -v github.com/akavel/rsrc@latest
+        rsrc --manifest "./.windows/exec.manifest" -o ./cmd/rsrc.syso
+        env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
       - name: Set outputs
         id: vars
