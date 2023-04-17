@@ -13,8 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Binary
-        run: env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
+      - name: build the binary
+        run: |
+          go install -v github.com/akavel/rsrc@latest
+          rsrc --manifest "./.windows/exec.manifest" -o ./cmd/rsrc.syso
+          env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dcs-updater
+          path: "./DCS Updater.exe"
 
       - name: Create Release
         id: create_release
@@ -38,5 +46,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./DCS Updater.exe"
-          asset_name: "DCS Updater.exe"
-          asset_content_type: application/zip
+          asset_name: dcs-updater
+          asset_content_type: application/vnd.microsoft.portable-executable
