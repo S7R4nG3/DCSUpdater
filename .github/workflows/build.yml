@@ -16,9 +16,7 @@ jobs:
           check-latest: true
 
       - name: build the binary
-        run: |
-          env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
-          ls -la
+        run: env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
       - name: Set outputs
         id: vars
