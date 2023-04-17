@@ -51,5 +51,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "./DCS Updater.exe"
-          asset_name: dcs-updater
+          asset_name: "DCS Updater.exe"
           asset_content_type: application/vnd.microsoft.portable-executable
