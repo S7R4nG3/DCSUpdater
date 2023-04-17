@@ -27,7 +27,7 @@ jobs:
       - name: store the binary 
         uses: actions/upload-artifact@v3
         with:
-          name: "DCS Updater-${{ env.sha_short }}.exe"
+          name: "DCS Updater-${{ env.sha_short }}"
           path: "./DCS Updater.exe*"
           retention-days: 7
       
