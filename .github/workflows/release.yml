@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -25,3 +26,23 @@ jobs:
             ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
+
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: "DCS Updater-${{ env.sha_short }}"
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "./DCS Updater-${{ env.sha_short }}.zip"
+          asset_name: "DCS Updater.zip"
+          asset_content_type: application/zip
