@@ -17,3 +17,5 @@ The updater will launch as it normally would and once complete the updater will 
 ## Future
 
 I would like to enhance the app a bit by making the UI a little bit cleaner as well as adding the ability to install/uninstall different modules without having to launch the app.
+
+Additionally I'd like to figure out a clean way to setup some integrated testing to ensure that everything is going to execute as expected...
