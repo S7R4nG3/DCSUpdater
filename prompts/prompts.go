@@ -1,6 +1,9 @@
 package prompts
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/S7R4nG3/DCSUpdater/flags"
 	"github.com/S7R4nG3/DCSUpdater/run"
 	"github.com/S7R4nG3/DCSUpdater/types"
@@ -92,6 +95,7 @@ func (ui *UI) Prompt() {
 				OnClicked: func() {
 					out.SetReadOnly(true)
 					out.AppendText("Starting Updater...")
+					out.AppendText(fmt.Sprintf("\r\nRunning Command:\r\n\t%s %s", ui.UpdaterPath, strings.Join(ui.CLiFlags[:], " ")))
 					out.AppendText(run.Cmd(ui.UpdaterPath, ui.CLiFlags))
 					out.AppendText("\r\nSUCCESS!")
 				},

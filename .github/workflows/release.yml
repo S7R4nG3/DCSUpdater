@@ -21,7 +21,7 @@ jobs:
       - name: build the binary
         run: |
           go install -v github.com/akavel/rsrc@latest
-          rsrc --manifest "./.windows/exec.manifest" -o ./cmd/rsrc.syso
+          rsrc.exe --manifest ".\.windows\windows.manifest" -ico ".\.windows\icon.ico" -o ".\cmd\rsrc.syso"
           env GOOS=windows GOARCH=386 go build -o "DCS Updater.exe" -ldflags -H=windowsgui ./cmd/
 
       - uses: actions/upload-artifact@v3
